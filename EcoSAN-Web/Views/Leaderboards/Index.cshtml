@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Leaderboards";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h2 style="text-align:center;">All-time Leaderboard</h2>
+        <table id="tableAllTimeLeaderboard" style="min-height:600px" class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>Points</th>
+                    <th>Pickups</th>
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h2 style="text-align:center;">Rolling Month Leaderboard</h2>
+        <table id="tableMonthlyLeaderboard" style="min-height:600px" class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>Points</th>
+                    <th>Pickups</th>
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <h2 style="text-align:center;">Rolling Week Leaderboard</h2>
+        <table id="tableWeelyLeaderboard" style="min-height:600px" class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>Points</th>
+                    <th>Pickups</th>
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            window.setInterval(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "http://ecosan.azurewebsites.net/api/trashpickup/leaderboardsall",
+                    data: "{}",
+                    success: function (result) {
+                        $('#tableWeelyLeaderboard').DataTable({
+                            data: result,
+                        });
+                    },
+                    dataType: "json"
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "http://ecosan.azurewebsites.net/api/trashpickup/leaderboardsmonth",
+                    data: "{}",
+                    success: function (result) {
+                        $('#tableMonthlyLeaderboard').DataTable({
+                            data: result,
+                        });
+                    },
+                    dataType: "json"
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "http://ecosan.azurewebsites.net/api/trashpickup/leaderboardsweek",
+                    data: "{}",
+                    success: function (result) {
+                        $('#tableAllTimeLeaderboard').DataTable({
+                            data: result,
+                        });
+                    },
+                    dataType: "json"
+                });
+            }, 300000);
+        });
+    </script>
+}

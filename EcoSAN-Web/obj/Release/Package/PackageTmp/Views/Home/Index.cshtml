@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="cesiumContainer">
+
+</div>
+
+<style>
+    main, html, body, #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+</style>
+
+@section Scripts {
+<script>
+    var intitalLoadTime = Date.now() / 1000;
+
+    Cesium.BingMapsApi.defaultKey = 'Ai-BiIStRgJwHolBLlJmXQitOirw1Rg6uK8rXIskb5MtF1mprtv5yJxP0ObbGlNE';
+
+    var pinBuilder = new Cesium.PinBuilder();
+
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        vrButton: false,
+        timeline: false,
+        navigationHelpButton: false,
+        animation: false
+    });
+
+    $('.cesium-widget-credits').remove();
+
+    function addPin(lat, long, pincaption) {
+
+        var url = Cesium.buildModuleUrl("../../Content/img/recycle.png");
+        var recyclePin = Cesium.when(pinBuilder.fromUrl(url, Cesium.Color.GREEN, 60), function (canvas) {
+            return viewer.entities.add({
+                name: pincaption + ' Recycled Here',
+                position: Cesium.Cartesian3.fromDegrees(long, lat),
+                billboard: {
+                    image: canvas.toDataURL(),
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+                }
+            });
+        });
+
+        $.notify({
+            // options
+            icon: 'fa fa-recycle',
+            message: pincaption + ' Picked Up Trash!'
+        }, {
+                // settings
+                type: "success",
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                },
+                animate: {
+                    enter: 'animated fadeInRight',
+                    exit: 'animated fadeOutRight'
+                }
+            });
+    }
+
+
+    // Initialize Firebase
+    // TODO: Replace with your project's customized code snippet
+    var config = {
+        apiKey: "AIzaSyBmyb9mnqNHr3h94CavX2ZfpdJeiP39gu4",
+        authDomain: "ecospan-6213f.firebaseapp.com",
+        databaseURL: "https://ecospan-6213f.firebaseio.com",
+        projectId: "ecospan-6213f",
+        storageBucket: "ecospan-6213f.appspot.com",
+        messagingSenderId: "772129957585"
+    };
+    firebase.initializeApp(config);
+
+    var newTrashPickup = firebase.database().ref('/Pickup/');
+    newTrashPickup.limitToLast(1).on('child_added', function (snapshot) {
+        var pickup = snapshot.val();
+        console.log(pickup);
+        if (pickup.TimeStamp > intitalLoadTime) {
+            addPin(pickup.Latitude, pickup.Longitude, pickup.DeviceName);
+        }
+    });
+</script>        
+}

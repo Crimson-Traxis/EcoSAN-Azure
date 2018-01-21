@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="EcoPAN" />
+    <meta name="keywords" content="Eco, IPhone, Recycling, Bio" />
+    <meta name="author" content="EcoPAN" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Google Webfont -->
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    @Styles.Render("~/bundles/css")
+
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body data-name="gototop">
+
+    <!-- Navigation -->
+    <div id="fh5co-main-nav-wrap">
+        <div class="fh5co-nav-overlay"></div>
+        <div class="fh5co-nav-inner">
+            <ul id="fh5co-main-nav">
+                <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Leaderboards", "Index", "Leaderboards")</li>
+                <li>@Html.ActionLink("About", "Index", "About")</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Navigation -->
+    <!-- Header -->
+    <header id="fh5co-header" role="banner">
+        @*<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle fh5co-nav-white"><i></i></a>*@
+    </header>
+    <!-- Header -->
+
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/js")
+
+    <script src="~/Scripts/Cesium/Cesium.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-database.js"></script>
+
+    @Styles.Render("~/bundles/cesium")
+
+    @Scripts.Render("~/bundles/main")
+
+    <script src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
